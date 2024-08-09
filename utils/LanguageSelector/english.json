@@ -1,0 +1,30 @@
+{
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome!"
+  },
+  "cat": {
+    "name1": "Category name",
+    "cost1": "Total Budget",
+    "create": "Create",
+    "heading": "Add New Category"
+  },
+  "item": {
+    "name1": "Item name",
+    "cost": "Cost",
+    "add": "Add",
+    "note": "Note",
+    "heading": "Add New Items"
+  },
+  "details": {
+    "welcome": "Welcome!",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Login",
+    "password": "Password",
+    "placeholder": "email@address.com",
+    "welcome2": " Welcome to our app!",
+    "noaccount": "Don't have an account?",
+    "account": "Already have an account!"
+  }
+}
