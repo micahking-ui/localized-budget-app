@@ -3,7 +3,6 @@ import englishData from "../utils/LanguageSelector/english.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LANGUAGE_KEY = "language";
-
 const LanguageStorage = {
   async setLanguage(language) {
     try {

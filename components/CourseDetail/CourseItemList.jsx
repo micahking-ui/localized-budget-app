@@ -7,12 +7,14 @@ import {
   ToastAndroid,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Colors from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "../../app/lib/supabase-client";
+import { TranslationContext } from "../../contexts/translationContext";
 
 export default function CourseItemList({ categoryData, setUpdateRecord }) {
+  const {translation}=useContext(TranslationContext);
   const [expandItems, setExpandItems] = useState();
   const onDeleteItem = async (id) => {
     const { error } = await supabase

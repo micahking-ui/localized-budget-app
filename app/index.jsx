@@ -29,26 +29,31 @@ export default function HomePage() {
       style={{
         display: "flex",
         alignItems: "center",
-        backgroundColor:Colors.WHITE
-       
+        backgroundColor: "#f2f2f2",
       }}
     >
       <View
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-evenly",
-          alignSelf: "flex-start",
-          marginTop:30,
-          paddingHorizontal:10,
-          paddingTop:5
+          justifyContent: "space-between",
+          alignSelf: "stretch",
+          marginTop: 30,
+          paddingHorizontal: 10,
+          paddingTop: 5,
         }}
       >
         <TouchableOpacity
           onPress={() => handleLanguageChange("hausa")}
           style={styles.selectionButton}
         >
-          <Text style={{ color: Colors.BLACK, fontFamily: "poppins-medium", fontSize:18 }}>
+          <Text
+            style={{
+              color: Colors.BLACK,
+              fontFamily: "poppins-medium",
+              fontSize: 18,
+            }}
+          >
             Hausa
           </Text>
         </TouchableOpacity>
@@ -56,52 +61,86 @@ export default function HomePage() {
           onPress={() => handleLanguageChange("english")}
           style={styles.selectionButton}
         >
-          <Text style={{ color: Colors.BLACK, fontFamily: "poppins-medium", fontSize:18 }}>
+          <Text
+            style={{
+              color: Colors.BLACK,
+              fontFamily: "poppins-medium",
+              fontSize: 18,
+            }}
+          >
             English
           </Text>
         </TouchableOpacity>
       </View>
-  <Image source={require('../assets/bimage.png')} style={styles.welcomeImg}/>
+
+      <Image
+        source={require("../assets/splash.png")}
+        style={styles.welcomeImg}
+      />
       <View style={styles.bgBottom}>
-        <Text style={styles.heading}>Personal Budget Planner</Text>
-        <Text style={styles.paragraph}>Stay on Track, Event by Event: Your Personal Budget Planner App!</Text>
-    
-          <TouchableOpacity onPress={() => router.replace("/(auth)/login")}style={styles.button}>
-            <Text style={{textAlign:'center', fontSize:18, fontFamily:'poppins-bold', color:Colors.BLACK}} >Get Started</Text>
+        <Text style={styles.heading2}>Kasafin Kudi </Text>
+        <Text style={styles.paragraph}>
+          <Text>{translations.intro?.welcome}</Text>
+          <Text style={styles.heading}> NaijaBudget</Text> 
+         <Text>{translations.intro?.welcome1}</Text> 
+        </Text>
+        <View style={styles.buttonCon}>
+          <TouchableOpacity
+            onPress={() => router.replace("/(auth)/login")}
+            style={styles.button}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 15,
+                fontFamily: "poppins-bold",
+                color: Colors.BLACK,
+              }}
+            >
+              {translations.intro?.getstarted}
+            </Text>
           </TouchableOpacity>
-        
+        </View>
       </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  selectionButton:{
+  selectionButton: {
     marginRight: 5,
     backgroundColor: Colors.WHITE,
     padding: 5,
     borderRadius: 5,
+    marginTop: 10,
+    elevation: 4,
   },
   button: {
     padding: 15,
-    backgroundColor:Colors.WHITE,
-    borderRadius:99,
-    paddingHorizontal:5,
-   
+    backgroundColor: Colors.WHITE,
+    borderRadius: 99,
+    elevation:10
   },
- 
+
   heading: {
+    fontSize: 15,
+    marginTop: -15,
+    fontFamily: "poppins-bold",
+    textAlign: "center",
+    marginBottom: 20,
+    color: Colors.WHITE,
+  },
+  heading2: {
     fontSize: 35,
     fontFamily: "poppins-bold",
-    marginBottom: 10,
     textAlign: "center",
     color: Colors.WHITE,
   },
   paragraph: {
-    fontSize: 18,
+    fontSize: 15,
     fontFamily: "poppins",
     marginBottom: 20,
     textAlign: "center",
-    color: Colors.WHITE
+    color: Colors.WHITE,
   },
   getstarted: {
     backgroundColor: "#4caf50",
@@ -109,22 +148,24 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     fontSize: 18,
+   
   },
   welcomeImg: {
-    marginTop: 40,
-    width: 210,
-    height: 440,
-    borderColor: "black",
-    borderRadius:20,
-    borderWidth:5
+    marginTop: 4,
+    width: 250,
+    height: 250,
+    justifyContent: "center",
+    alignItems: "center",
   },
   bgBottom: {
     backgroundColor: Colors.BLACK,
-    width: "100%",
-    height: "100%",
-    marginTop: -30,
-    borderTopLeftRadius:20,
-    borderTopRightRadius:20,
-    padding:20
+    height: 300,
+    marginTop: 20,
+    padding: 20,borderRadius:20,
+    marginHorizontal:6
+  },
+  buttonCon: {
+    padding: 1,
+    
   },
 });

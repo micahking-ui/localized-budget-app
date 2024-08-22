@@ -16,7 +16,7 @@ import Colors from "../utils/Colors";
 import ColorPicker from "../components/ColorPicker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { supabase } from "../app/lib/supabase-client";
 import { TranslationContext } from "../contexts/translationContext";
 
@@ -28,7 +28,6 @@ export default function AddNewCategory() {
   const [categoryName, setCategoryName] = useState();
   const [totalBudget, setTotalBudget] = useState();
   const [loading, setLoading] = useState(false);
-
   const [user, setUser] = useState(null);
   const { translations } = useContext(TranslationContext);
 
@@ -71,6 +70,11 @@ export default function AddNewCategory() {
   };
   return (
     <KeyboardAvoidingView>
+      <Stack.Screen
+      options={{
+        headerShown: true,
+        headerTitle: translations.cat?.heading
+      }}/>
       <ScrollView
         style={{
           marginTop: 10,

@@ -7,14 +7,16 @@ import {
   View,
   FlatList,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Stack, useNavigation, useRouter } from "expo-router";
 import { supabase } from "../../lib/supabase-client";
 import Colors from "../../../utils/Colors";
 import { Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { TranslationContext } from "../../../contexts/translationContext";
 
 export default function SettingPage() {
+  const {translations}=useContext(TranslationContext)
   const router = useRouter();
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
@@ -41,28 +43,29 @@ export default function SettingPage() {
   const profileMenu = [
     {
       id: 1,
-      name: "Home",
+      name: "Gida",
       icon: "home",
       route: "(tabs)/home/",
     },
     {
       id: 2,
-      name: "Expense",
+      name: "Kudi",
       icon: "contract",
       route: "expense",
     },
     {
       id: 3,
-      name: "Log-Out",
+      name: "Fita",
       icon: "log-out",
     },
   ];
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View>
+      <View style={{ backgroundColor: Colors.WHITE }}>
         <View
           style={{ padding: 20, paddingTop: 30, backgroundColor: Colors.BLACK }}
         >
+          <Text style={{fontFamily:'poppins-bold', paddingTop:10, fontSize:20, color:Colors.WHITE, opacity:0.8}}>{translations.terms?.profile}</Text>
           <View
             style={{
               display: "flex",
@@ -91,25 +94,29 @@ export default function SettingPage() {
             >
               {user?.email.split("@")[0]}
             </Text>
-
-            <Text
-              style={{
-                fontSize: 18,
-                fontFamily: "poppins",
-                color: Colors.WHITE,
-              }}
-            >
-              {user?.email}
-            </Text>
+           
           </View>
         </View>
         <View
           style={{
-            paddingTop: 40,
+            paddingTop: 10,
             backgroundColor: "white",
-            paddingBottom: 100,
+           
           }}
         >
+           <View style={{backgroundColor:Colors.BLACK, padding:10, marginHorizontal:10, borderRadius:4}}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: "poppins",
+                  color: Colors.WHITE,
+                  textAlign:'center'
+                }}
+              >
+                {user?.email}
+              </Text>
+            </View>
+           <View style={{backgroundColor:Colors.WHITE, padding:10, marginHorizontal:10, borderRadius:4, marginTop:25, elevation:4}}> 
           <FlatList
             data={profileMenu}
             renderItem={({ item, index }) => (
@@ -125,11 +132,12 @@ export default function SettingPage() {
                 }}
                 style={styles.textContainer}
               >
-                <Ionicons name={item.icon} size={44} color={Colors.BLACK} />
+                <Ionicons name={item.icon} size={25} color={Colors.BLACK} />
                 <Text>{item.name} </Text>
               </TouchableOpacity>
             )}
           />
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -140,9 +148,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-    marginBottom: 40,
-    paddingHorizontal: 80,
+    gap: 20,
+    marginBottom: 20,
+    paddingHorizontal: 50,
   },
   ButtonContainer: {
     backgroundColor: "#000965",

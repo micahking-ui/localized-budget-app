@@ -31,8 +31,7 @@ export default function RootLayout() {
           name="add-new-category"
           options={{
             presentation: "modal",
-            headerShown: true,
-            headerTitle: "Add New Category",
+           
           }}
         />
 
@@ -42,7 +41,7 @@ export default function RootLayout() {
             presentation: "modal",
             headerShown: true,
             headerTitle: "Add New Items",
-            headerShadowVisible: false,
+            
           }}
         />
         <Stack.Screen

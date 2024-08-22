@@ -27,22 +27,6 @@ export default function Auth() {
   const [showPassword, setShowPassword] = useState(false);
   const [slideAnim, setSlideAnim] = useState(new Animated.Value(0));
   const router = useRouter();
-  useEffect(() => {
-    Animated.sequence([
-      Animated.delay(500),
-      Animated.spring(slideAnim, {
-        toValue: 1,
-        stiffness: 100,
-        damping: 20,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, []);
-
-  const slideIn = slideAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-100, 0],
-  });
 
   async function signInWithEmail() {
     setLoading(true);
@@ -51,8 +35,22 @@ export default function Auth() {
       password: password,
     });
     if (error) {
-      Alert.alert("Sign In Error", error.message);
-      ToastAndroid.show("Please Check your login details!", ToastAndroid.TOP);
+      Alert.alert(
+        translations.errors?.loginError,
+        translations.errors?.invalidCredentials,
+        [
+          {
+            text: translations.common?.ok, // Custom text for the button
+            onPress: () => console.log("OK Pressed"),
+            style: "default", // You can use "default", "cancel", or "destructive"
+          },
+        ],
+        { cancelable: false } // Prevents the alert from being dismissed by tapping outside
+      );
+      ToastAndroid.show(
+        translations.errors?.checkLoginDetails,
+        ToastAndroid.TOP
+      );
     } else {
       // Login successful, store user data
       await storeUserData(user);
@@ -83,7 +81,7 @@ export default function Auth() {
               elevation: 30,
             }}
           />
-          <Animated.Text
+          <Text
             style={{
               fontSize: 20,
               fontFamily: "poppins-bold",
@@ -91,12 +89,10 @@ export default function Auth() {
               marginTop: 20,
               paddingHorizontal: 18,
               textAlign: "center",
-              transform: [{ translateX: slideIn }],
             }}
-            useNativeDriver={true}
           >
             {translations.details?.welcome}
-          </Animated.Text>
+          </Text>
 
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <TextInput
@@ -108,12 +104,7 @@ export default function Auth() {
               autoCapitalize={"none"}
             />
           </View>
-          <View
-            style={[
-              styles.verticallySpaced,
-              { flexDirection: "row", justifyContent: "space-between" },
-            ]}
-          >
+          <View style={[styles.verticallySpaced]}>
             <TextInput
               style={[styles.textInput, { flex: 1 }]}
               label="Password"
@@ -123,26 +114,55 @@ export default function Auth() {
               placeholder={translations.details?.password}
               autoCapitalize={"none"}
             />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
+            <View
               style={{
-                alignSelf: "center",
-                padding: 15,
-                backgroundColor: Colors.EYES,
-                borderRadius: 15,
-                marginRight: 8,
+                flexDirection: "row",
+                alignItems: "center",
+                paddingHorizontal: 10,
               }}
             >
-              <Ionicons
-                name={showPassword ? "eye-off" : "eye"}
-                size={24}
-                color={Colors.GRAY}
-              />
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: 4,
+                  borderWidth: 1,
+                  borderColor: "#00698f",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {showPassword ? (
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 2,
+                      backgroundColor: "#00698f",
+                    }}
+                  />
+                ) : null}
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "poppins-medium",
+                  color: "#00698f",
+                  marginLeft: 12,
+                }}
+              >
+                {showPassword
+                  ? translations.details?.hide
+                  : translations.details?.show}
+              </Text>
+            </View>
           </View>
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <View style={styles.ButtonContainer}>
-              <TouchableOpacity disabled={loading} onPress={signInWithEmail}>
+              <TouchableOpacity
+                disabled={!email || !password}
+                onPress={signInWithEmail}
+              >
                 {loading ? (
                   <ActivityIndicator color={Colors.WHITE} size="large" />
                 ) : (
@@ -192,6 +212,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     marginLeft: 8,
     elevation: 10,
+    marginTop: 10,
   },
   ButtonText: {
     padding: 5,
@@ -202,11 +223,11 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   container: {
-    marginTop: 140,
-    padding: 12,
+    marginTop: 90,
+    padding: 15,
     justifyContent: "center",
     elevation: 1,
-    marginHorizontal: 8,
+    marginHorizontal: 10,
     borderRadius: 30,
     backgroundColor: "white",
   },

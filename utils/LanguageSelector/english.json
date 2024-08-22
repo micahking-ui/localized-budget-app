@@ -23,8 +23,78 @@
     "logout": "Login",
     "password": "Password",
     "placeholder": "email@address.com",
-    "welcome2": " Welcome to our app!",
+    "welcome2": " Welcome to NaijaBudget!",
     "noaccount": "Don't have an account?",
-    "account": "Already have an account!"
+    "account": "Already have an account! ",
+    "hide": "Hide",
+    "show": "Show Password!"
+
+  },
+  "itemlist":{
+    "items":"Items",
+    "list":"List of Items",
+    "total":"Total Budget"
+  },
+  "edit":{
+    "header":"Edit Category",
+    "name":"Category name",
+    "total":"Total Budget",
+    "button":"Update"
+
+  },
+  "months":{
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  },  
+  "advices":{
+    "advice":"Suggestion: Consider prioritizing the most affordable items first to stay within your budget. This will help you manage your finances more effectively.",
+    "order":"Suggested Order",
+    "hide": "Hide",
+    "show": "Show Suggestion"
+    
+  },
+  "terms":{
+    "month":"Monthly Exspense",
+    "latest":"Latest Budget",
+    "estimate":"Total Estimate",
+    "home": "Home",
+    "expense": "Expense",
+    "logout": "Log-Out",
+    "profile": " My Profile",
+    "noitems": "No items found",
+    "today":"Today"
+
+  },
+  "intro":{
+    "welcome":"Welcome to ",
+    "welcome1":" We are delighted to welcome you to this easy-to-use and helpful app for organizing your finances.",
+    "getstarted":"Get Started"
+  },
+  "errors":{
+    "loginError": "Sign in error",
+    "invalidCredentials": "Invalid login credentials",
+    "checkLoginDetails": "Please check your login details!"
+  },
+  "common":{
+    "ok":"OK"
+  },
+  "alerts": {
+    "sure": "Are you sure?",
+    "really": "Do you really want to delete?",
+    "cancel": "Cancel",
+    "yes": "Yes"
   }
+
+  
+
 }

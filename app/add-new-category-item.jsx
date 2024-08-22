@@ -14,7 +14,7 @@ import React, { useContext, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import Colors from "../utils/Colors";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { supabase } from "../app/lib/supabase-client";
 import { decode } from "base64-arraybuffer";
@@ -90,6 +90,11 @@ export default function AddNewCategoryItems() {
 
   return (
     <KeyboardAvoidingView>
+      <Stack.Screen
+      options={{
+        headerShown: true,
+        headerTitle: translations.item?.heading
+      }}/>
       <ScrollView style={{ padding: 20, backgroundColor: Colors.WHITE }}>
         <TouchableOpacity onPress={onImagePick}>
           <Image

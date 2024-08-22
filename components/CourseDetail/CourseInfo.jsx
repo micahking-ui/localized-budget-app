@@ -6,11 +6,12 @@ import {
   Alert,
   ToastAndroid,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../utils/Colors";
 import { supabase } from "../../app/lib/supabase-client";
 import { Link, useRouter } from "expo-router";
+import { TranslationContext } from "../../contexts/translationContext";
 
 export default function CourseInfo({ categoryData }) {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function CourseInfo({ categoryData }) {
   const [sortedItems, setSortedItems] = useState([]);
   const [exceedsBudget, setExceedsBudget] = useState(false);
   const [showAdvice, setShowAdvice] = useState(true);
+  const {translations}=useContext(TranslationContext)
 
   useEffect(() => {
     categoryData && calculateTotalPerc();
@@ -44,13 +46,13 @@ export default function CourseInfo({ categoryData }) {
   };
 
   const onDeleteCategory = async () => {
-    Alert.alert("Are you sure", "Do you really want to delete?", [
+    Alert.alert(translations.alerts?.sure, translations.alerts?.really, [
       {
-        text: "Cancel",
+        text: translations.alerts?.cancel,
         style: "cancel",
       },
       {
-        text: "Yes",
+        text: translations.alerts?.yes,
         style: "destructive",
 
         onPress: async () => {
@@ -83,7 +85,7 @@ export default function CourseInfo({ categoryData }) {
         <View style={{ flex: 1, marginLeft: 20 }}>
           <Text style={styles.CategoryName}>{categoryData?.name}</Text>
           <Text style={styles.CategoryItem}>
-            {categoryData?.CategoryItems?.length} Items
+          {translations.itemlist?.items} {categoryData?.CategoryItems?.length} 
           </Text>
           <Text style={styles.url} numberOfLines={2}>
             {new Date(categoryData?.created_at).toLocaleDateString()}
@@ -119,7 +121,7 @@ export default function CourseInfo({ categoryData }) {
           {categoryData?.assigned_budget - totalCost}
         </Text>
         <Text style={{ fontFamily: "poppins-medium" }}>
-          Total Budget: ₦ {categoryData?.assigned_budget}
+         {translations.itemlist?.total}: ₦ {categoryData?.assigned_budget}
         </Text>
       </View>
       <View style={styles.prograssBarMain}>
@@ -138,11 +140,10 @@ export default function CourseInfo({ categoryData }) {
                   fontSize: 15,
                 }}
               >
-                **Suggestion:** Consider prioritizing the most affordable items
-                first to stay within your budget.
+              {translations.advices?.advice}
               </Text>
               <Text style={{ fontFamily: "poppins-bold",   fontSize: 15, }}>
-                Suggested Order:
+                {translations.advices?.order}
               </Text>
               <View>
                 {sortedItems?.map((item, index) => (
@@ -171,7 +172,7 @@ export default function CourseInfo({ categoryData }) {
                   marginTop:5
                 }}
               >
-                {showAdvice ? "Hide" : "Show Suggestion"}
+                {showAdvice ? translations.advices?.hide : translations.advices?.show}
               </Text>
               <Ionicons
                 name={showAdvice ? "chevron-up" : "chevron-down"}
@@ -183,7 +184,7 @@ export default function CourseInfo({ categoryData }) {
           </TouchableOpacity>
         </View>
       )}
-      <Text style={styles.heading}>List of Items</Text>
+      <Text style={styles.heading}>{translations.itemlist?.list}</Text>
     </View>
   );
 }

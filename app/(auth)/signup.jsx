@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import { supabase } from "../lib/supabase-client";
 import { Link, useRouter } from "expo-router";
@@ -15,10 +16,6 @@ import Colors from "../../utils/Colors";
 import { Ionicons } from "react-native-vector-icons";
 import { Image } from "react-native";
 import { TranslationContext } from "../../contexts/translationContext";
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
 
 export default function SignUpAuth() {
   const [email, setEmail] = useState("");
@@ -27,23 +24,33 @@ export default function SignUpAuth() {
   const [showPassword, setShowPassword] = useState(false);
   const { translations } = useContext(TranslationContext);
   const router = useRouter();
+  
+  
 
   async function signUpWithEmail() {
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) {
-      Alert.alert("Sign Up Error", error.message);
-      ToastAndroid.show("Please supply your details!", ToastAndroid.TOP);
-    } else {
-      router.replace("/(auth)/login");
-      ToastAndroid.show("Sign Up Successful!", ToastAndroid.SHORT);
+    
+      try {
+        const { error } = await supabase.auth.signUp({
+          email: email,
+          password: password,
+        });
+  
+        if (error) {
+          Alert.alert("Sign Up Error", error.message, );
+        
+        } else {
+          router.replace("/(auth)/login");
+          ToastAndroid.show("Sign Up Successful!", ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        
+       
+          Alert.alert("Sign Up Error", error.message);
+          ToastAndroid.show("Please supply your details!", ToastAndroid.TOP);
+       
     }
-
-    setLoading(false);
+  
   }
 
   return (
@@ -78,19 +85,7 @@ export default function SignUpAuth() {
           >
             {translations.details?.welcome2}
           </Text>
-          <Text
-            style={{
-              fontSize: 12,
-              color: "444444",
-              marginTop: 5,
-              textAlign: "center",
-              paddingHorizontal: 20,
-              fontFamily: "poppins",
-            }}
-          >
-            You're now part of our community. Start exploring and make the most
-            out of it!
-          </Text>
+          
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <TextInput
               style={styles.textInput}
@@ -102,10 +97,8 @@ export default function SignUpAuth() {
             />
           </View>
           <View
-            style={[
-              styles.verticallySpaced,
-              { flexDirection: "row", justifyContent: "space-between" },
-            ]}
+            style={
+              styles.verticallySpaced}
           >
             <TextInput
               style={[styles.textInput, { flex: 1 }]}
@@ -115,33 +108,49 @@ export default function SignUpAuth() {
               placeholder={translations.details?.password}
               autoCapitalize={"none"}
             />
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal:10 }}>
             <TouchableOpacity
               onPress={() => setShowPassword(!showPassword)}
               style={{
-                alignSelf: "center",
-                padding: 15,
-                backgroundColor: Colors.EYES,
-                borderRadius: 15,
-                marginRight: 8,
+                width: 20,
+                height: 20,
+                borderRadius: 4,
+                borderWidth: 1,
+                borderColor: "#00698f",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Ionicons
-                name={showPassword ? "eye-off" : "eye"}
-                size={24}
-                color={Colors.GRAY}
-              />
+              {showPassword ? (
+                <View
+                  style={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: 2,
+                    backgroundColor: "#00698f",
+                  }}
+                />
+              ) : null}
             </TouchableOpacity>
+            <Text
+              style={{
+                fontFamily: "poppins-medium",
+                color: "#00698f",
+                marginLeft: 12,
+              }}
+            >
+              {showPassword ?  translations.details?.hide :translations.details?.show}
+            </Text>
+            </View>
           </View>
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <View style={styles.ButtonContainer}>
-              <TouchableOpacity disabled={loading} onPress={signUpWithEmail}>
-                {loading ? (
-                  <ActivityIndicator color={Colors.WHITE} size="large" />
-                ) : (
+              <TouchableOpacity disabled={!email || password} onPress={signUpWithEmail}>
+               
                   <Text style={styles.ButtonText}>
                     {translations.details?.signup}
                   </Text>
-                )}
+              
               </TouchableOpacity>
             </View>
           </View>
@@ -195,7 +204,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   container: {
-    marginTop: 120,
+    marginTop: 80,
     padding: 12,
     justifyContent: "center",
     elevation: 1,

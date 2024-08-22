@@ -1,15 +1,17 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Colors from "../utils/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PieChart from "react-native-pie-chart";
 import { useEffect } from "react";
+import { TranslationContext } from "../contexts/translationContext";
 
 export default function CircularChart({ categoryList }) {
   const widthAndHeight = 125;
   const [values, setValues] = useState([1]);
   const [sliceColor, setSliceColor] = useState([Colors.GRAY]);
   const [totalEstimate, setTotalEstimate] = useState();
+  const {translations}=useContext(TranslationContext)
 
   useEffect(() => {
     if (categoryList && categoryList.length > 0) {
@@ -48,7 +50,7 @@ export default function CircularChart({ categoryList }) {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 20, fontFamily: "poppins" }}>
-        Total Estimate:
+       {translations.terms?.estimate}:
         <Text style={{ fontFamily: "poppins-bold" }}> ₦ {totalEstimate}</Text>
       </Text>
       <View style={styles.subContainer}>

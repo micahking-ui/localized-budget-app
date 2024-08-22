@@ -1,27 +1,30 @@
 import { View, Text, StyleSheet, Image, ScrollView, Alert } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesome6 } from "@expo/vector-icons";
 import Colors from "../../../utils/Colors";
 import { supabase } from "../../lib/supabase-client";
 import { useLocalSearchParams } from "expo-router";
+import { TranslationContext } from "../../../contexts/translationContext";
 
 export default function ExpensePage() {
+  const {translations}=useContext(TranslationContext);
   const { categoryId } = useLocalSearchParams();
   const [itemsData, setItemsData] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
   const [overallTotal, setOverallTotal] = useState(0);
-
   //getting current date
   useEffect(() => {
     const date = new Date();
     const day = date.getDate();
-    const month = date.toLocaleString("en-US", { month: "long" });
+    const month = date.toLocaleString("en-US", { month: "long" }).toLowerCase();
     const year = date.getFullYear();
-    setCurrentDate(`${day}th ${month} ${year}`);
+    setCurrentDate(`${day} ${translations.months?.[month]}, ${year}`);
     //getting all items
     getAllItems();
     console.log("get item", getAllItems);
-  }, []);
+    
+    console.log('translations.months:', translations.months);
+  }, [translations]);
   //method for getting all category items
   const getAllItems = async () => {
     try {
@@ -80,7 +83,7 @@ export default function ExpensePage() {
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
-        <Text style={styles.todayText}>Today</Text>
+        <Text style={styles.todayText}>{translations.terms?.today}</Text>
         <View style={styles.currentContainer}>
           <Text style={styles.currentText}>{currentDate}</Text>
           <Text style={styles.TotalContainer}>₦ {overallTotal}</Text>
@@ -88,12 +91,12 @@ export default function ExpensePage() {
         <View style={styles.Line1}></View>
       </View>
       <View style={styles.expenseCon}>
-        <Text style={styles.monthExpen}>Monthly Expense</Text>
+        <Text style={styles.monthExpen}>{translations.terms?.month}</Text>
         <ScrollView showsVerticalScrollIndicator={false}>
           {Object.entries(itemsData).map(([month, { items, totalCost }]) => (
             <View key={month}>
               <View style={styles.monthlyTotal}>
-                <Text style={styles.monthlyText}>{month}</Text>
+                <Text style={styles.monthlyText}>{translations.months?.[month.split(' ')[0].toLowerCase()]} {month.split(' ')[1]}</Text>
                 <Text style={styles.monthText}>₦ {totalCost}</Text>
               </View>
               {items.map((item, index) => (
@@ -137,7 +140,8 @@ const styles = StyleSheet.create({
   monthText: {
     fontSize: 18,
     fontFamily: "poppins-bold",
-    color: Colors.GRAY_LIGHT,
+    color: Colors.DARK,
+    marginTop:-2
   },
   currentText: {
     fontSize: 18,
@@ -145,9 +149,9 @@ const styles = StyleSheet.create({
     color: "white",
   },
   monthlyText: {
-    fontSize: 18,
-    fontFamily: "poppins",
-    color: Colors.GRAY_LIGHT,
+    fontSize: 16,
+    fontFamily: "poppins-medium",
+    color: Colors.DARK
   },
   todayText: {
     paddingTop: 5,
@@ -169,6 +173,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     display: "flex",
     justifyContent: "space-between",
+  
   },
   Line1: {
     borderBottomWidth: 4,
@@ -222,10 +227,10 @@ const styles = StyleSheet.create({
     borderRadius: 99,
   },
   expenseCon: {
-    borderRadius: 25,
-    height: 500,
-    backgroundColor: "white",
-    padding: 20,
+    borderRadius: 15,
+    height: 480,
+    backgroundColor: "#f2f2f2",
+    padding: 15,
     marginHorizontal: 10,
     elevation: 20,
   },

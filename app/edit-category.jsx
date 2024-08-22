@@ -10,21 +10,24 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Colors from "../utils/Colors";
 import ColorPicker from "../components/ColorPicker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { supabase } from "../app/lib/supabase-client";
+import { TranslationContext } from "../contexts/translationContext";
 
 export default function EditCategory() {
+  
   const router = useRouter();
   const { categoryId } = useLocalSearchParams();
   const [selectedIcon, setSelectedIcon] = useState("");
   const [selectedColor, setSelectedColor] = useState(Colors.BLACK);
   const [categoryName, setCategoryName] = useState("");
   const [totalBudget, setTotalBudget] = useState("");
+  const { translations } = useContext(TranslationContext);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     fetchCategoryData();
@@ -72,6 +75,11 @@ export default function EditCategory() {
 
   return (
     <KeyboardAvoidingView>
+      <Stack.Screen
+      options={{
+        headerShown: true,
+        headerTitle: translations.edit?.header
+      }}/>
       <ScrollView
         style={{
           marginTop: 10,
@@ -101,7 +109,7 @@ export default function EditCategory() {
         <View style={styles.inputView}>
           <MaterialIcons name="local-offer" size={24} color={Colors.GRAY} />
           <TextInput
-            placeholder="Category Name"
+            placeholder={translations.edit?.name}
             style={{
               fontSize: 16,
               fontFamily: "poppins-medium",
@@ -114,7 +122,7 @@ export default function EditCategory() {
         <View style={styles.inputView}>
           <FontAwesome6 name="naira-sign" size={24} color={Colors.GRAY} />
           <TextInput
-            placeholder="Total Budget"
+            placeholder={translations.edit?.total}
             style={{
               fontSize: 16,
               fontFamily: "poppins-medium",
@@ -142,7 +150,7 @@ export default function EditCategory() {
                 color: "white",
               }}
             >
-              Update
+             {translations.edit?.button}
             </Text>
           )}
         </TouchableOpacity>

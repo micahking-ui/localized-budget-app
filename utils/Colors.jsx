@@ -1,10 +1,8 @@
 export default {
-  BLACK: "#9f3cfe",
-  EYES: "#b772fa",
+  BLACK: "#4f75fe",
+  EYES: "#4f75fe",
   BLACK1: "#22ce99",
   DARK: "#43597d",
-  PRIMARY: "#b3c9fb",
-  DIM: "#acd1fe",
   WHITE: "#ffff",
   BLUE: "#4f75fe",
   GREEN: "#13c38b",

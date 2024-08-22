@@ -18,14 +18,79 @@
     "heading": "Kara Sabuwar Abu"
   },
   "details": {
-    "welcome": "Maraba da zuwa!",
+    "welcome": "Barka da Zuwa",
     "login": "Shiga ciki",
     "signup": "Yi Rajista",
     "logout": "Fita",
     "password": "Lambar sirri",
-    "placeholder": "@adireshin.imel",
-    "welcome2": " Barka da zuwa safarimu!",
+    "placeholder": "imeladireshi@imel.com",
+    "welcome2": " Barka da zuwa NaijaBudget!",
     "noaccount": "Kirkiri Sabon Asusu? ",
-    "account": "Nemo asusunka? "
+    "account": "Nemo asusunka? ",
+    "hide": "Boye",
+    "show": "Nuna kalma sirri"
+  },
+  "itemlist":{
+    "items":"Kaya",
+    "list":"Jerin Kayyaki",
+    "total":"Jimillar Kasafin"
+  },
+  "edit":{
+    "header":"Gyara Rukuni",
+    "name":"Sunan rukuni",
+    "total":"Jimillar Kasafin",
+    "button":"Sabunta"
+
+  },
+  "months":{
+    "january": "Janairu",
+    "february": "Faburairu",
+    "march": "Maris",
+    "april": "Aprili",
+    "may": "Mayu",
+    "june": "Yuni",
+    "july": "Yuli",
+    "august": "Agusta",
+    "september": "Satumba",
+    "october": "Oktoba",
+    "november": "Nuwamba",
+    "december": "Disamba"
+  },
+  "advices":{
+    "advice":"SHAWARA: Yi la'akari da fifita abubuwan da suka fi araha don kasancewa cikin kasafin kuɗin ku. Wannan zai taimaka muku wajen sarrafa kuɗin ku yadda ya kamata.",
+    "order":"TSARI:",
+    "hide": "Boye",
+    "show": "Nuna Shawarar" 
+  },
+  "terms":{
+    "month":"Kudin wata-wata",
+    "latest":"Sabobin Kasafi",
+    "estimate":"Jimillar Kasafi",
+    "home": "Gida",
+    "expense": "Kudin",
+    "logout": "Fita",
+    "profile": "Shafin",
+    "noitems": "Babu abubuwa da aka samu",
+    "today":"Yau Ran"
+
+  },   
+  "intro":{
+    "welcome":" Barka da zuwa ",
+    "welcome1":"Muna farin cikin maraba da ku zuwa wannan manhaja mai sauƙi da amfani don tsara kuɗin ku",
+    "getstarted":"Fara"
+  },
+  "errors":{
+    "loginError": "Kuskuren Shiga",
+    "invalidCredentials": "Bayanan shiga ba daidai ba",
+    "checkLoginDetails": "Don Allah duba bayanan shigar ku!"
+  },
+  "common":{
+    "ok":"To"
+  },
+  "alerts": {
+    "sure": "Ka tabbata?",
+    "really": "Kana so ka share?",
+    "cancel": "Soke",
+    "yes": "Ee"
   }
 }

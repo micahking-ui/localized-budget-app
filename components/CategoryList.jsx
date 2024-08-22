@@ -1,9 +1,11 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import Colors from "../utils/Colors";
 import { useRouter } from "expo-router";
+import { TranslationContext } from "../contexts/translationContext";
 
 export default function CategoryList({ categoryList }) {
+  const {translations}=useContext(TranslationContext)
   const router = useRouter();
   const onCategoryClick = (category) => {
     router.push({
@@ -30,11 +32,11 @@ export default function CategoryList({ categoryList }) {
       <Text
         style={{
           fontFamily: "poppins-bold",
-          fontSize: 28,
+          fontSize: 26,
           marginBottom: 5,
         }}
       >
-        Latest Budget
+       {translations.terms?.latest}
       </Text>
 
       <View>
@@ -77,13 +79,12 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "center",
     backgroundColor: Colors.WHITE,
-    padding: 3,
+    padding: 5,
     borderRadius: 15,
   },
   iconText: {
-    padding: 16,
+    padding: 15,
     borderRadius: 15,
-    marginBottom: 10,
     alignItems: "center",
     fontSize: 35,
   },
