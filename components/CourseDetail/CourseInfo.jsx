@@ -13,6 +13,8 @@ import { supabase } from "../../app/lib/supabase-client";
 import { Link, useRouter } from "expo-router";
 import { TranslationContext } from "../../contexts/translationContext";
 
+
+
 export default function CourseInfo({ categoryData }) {
   const router = useRouter();
   const [totalCost, setTotalCost] = useState();
@@ -135,11 +137,12 @@ export default function CourseInfo({ categoryData }) {
               <Text
                 style={{
                   fontFamily: "poppins-medium",
-                  color: "#00698f",
+                  color:Colors.ORANGE,
                   textAlign: "justify",
                   fontSize: 15,
                 }}
               >
+                <Ionicons name="alert" size={20} color={Colors.RED} />
               {translations.advices?.advice}
               </Text>
               <Text style={{ fontFamily: "poppins-bold",   fontSize: 15, }}>
@@ -167,11 +170,12 @@ export default function CourseInfo({ categoryData }) {
               <Text
                 style={{
                   fontFamily: "poppins-medium",
-                  color: "#00698f",
+                  color:Colors.ORANGE,
                   marginLeft: 12,
-                  marginTop:5
+                  marginTop:-4
                 }}
               >
+                <Ionicons name="alert-circle" size={20} color={Colors.ORANGE} />
                 {showAdvice ? translations.advices?.hide : translations.advices?.show}
               </Text>
               <Ionicons

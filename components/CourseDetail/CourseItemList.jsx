@@ -67,7 +67,7 @@ export default function CourseItemList({ categoryData, setUpdateRecord }) {
             </React.Fragment>
           ))
         ) : (
-          <Text style={styles.noTextFound}>No Items Found</Text>
+          <Text style={styles.noTextFound}>{translations.terms?.noitems}</Text>
         )}
       </View>
     </View>

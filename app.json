@@ -1,16 +1,17 @@
 {
   "expo": {
-    "name": "budget-app",
-    "slug": "budget-app",
+    "name": "kasafin-kudi",
+    "slug": "kasafin-kudi",
     "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "budget-app",
+    "scheme": "kasafin-kudi",
     "icon": "./assets/splash.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "text":" Kasafin Kudi (NaijaBudget)"
     },
     "ios": {
       "supportsTablet": true
@@ -18,7 +19,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/splash.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+          "text":" Kasafin Kudi (NaijaBudget)"
       }
     },
     "web": {

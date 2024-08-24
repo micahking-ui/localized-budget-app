@@ -145,7 +145,7 @@ export default function SignUpAuth() {
           </View>
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <View style={styles.ButtonContainer}>
-              <TouchableOpacity disabled={!email || password} onPress={signUpWithEmail}>
+              <TouchableOpacity disabled={!email || !password} onPress={signUpWithEmail}>
                
                   <Text style={styles.ButtonText}>
                     {translations.details?.signup}

@@ -10,7 +10,6 @@ import {
   ActivityIndicator,
   Image,
   ToastAndroid,
-  Animated,
 } from "react-native";
 import { supabase } from "../lib/supabase-client";
 import { Link, useRouter } from "expo-router";
@@ -25,7 +24,7 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [slideAnim, setSlideAnim] = useState(new Animated.Value(0));
+
   const router = useRouter();
 
   async function signInWithEmail() {
@@ -52,9 +51,8 @@ export default function Auth() {
         ToastAndroid.TOP
       );
     } else {
-      // Login successful, store user data
-      await storeUserData(user);
-      await getUserData();
+    
+     
       ToastAndroid.show("Login Successful!", ToastAndroid.SHORT);
       // Navigate to home screen or perform other actions
     }

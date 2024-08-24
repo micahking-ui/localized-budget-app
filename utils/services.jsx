@@ -15,12 +15,12 @@ const LanguageStorage = {
   async getLanguage() {
     try {
       const language = await AsyncStorage.getItem(LANGUAGE_KEY);
-      if (language === "hausa") {
-        return hausaData;
-      } else if (language === "english") {
+      if (language === "english") {
         return englishData;
+      } else if (language === "hausa") {
+        return hausaData;
       } else {
-        return englishData; // default to english
+        return hausaData; // default to hausa
       }
     } catch (error) {
       console.error("Error getting language:", error);
