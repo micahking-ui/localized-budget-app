@@ -54,6 +54,7 @@ const {translations}=useContext(TranslationContext);
       }}
     >
       <ScrollView
+      showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             onRefresh={() => getCategoryList()}
