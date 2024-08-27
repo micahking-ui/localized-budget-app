@@ -8,14 +8,16 @@
     "name1": "Sunan rukuni",
     "cost1": "Jimillar kuɗi",
     "create": "Kirkira",
-    "heading": "Ƙara Sabuwar Rukuni"
+    "heading": "Ƙara Sabuwar Rukuni",
+    "added": "An kara Sabuwar Rukuni"
   },
   "item": {
     "name1": "Suna kayan",
     "cost": "Farashin",
     "add": "Kara",
     "note": "Rubuta bayani",
-    "heading": "Kara Sabuwar Abu"
+    "heading": "Kara Sabuwar Abu",
+    "added": "An Kara Sabuwar Abu"
   },
   "details": {
     "welcome": "Barka da Zuwa",
@@ -28,7 +30,9 @@
     "noaccount": "Kirkiri Sabon Asusu? ",
     "account": "Nemo asusunka? ",
     "hide": "Boye",
-    "show": "Nuna kalma sirri"
+    "show": "Nuna kalma sirri",
+     "firstname":"Sunan Farko",
+    "lastname": "Sunan Mahaifi:"
   },
   "itemlist":{
     "items":"Kaya",
@@ -82,7 +86,18 @@
   "errors":{
     "loginError": "Kuskuren Shiga",
     "invalidCredentials": "Bayanan shiga ba daidai ba",
-    "checkLoginDetails": "Don Allah duba bayanan shigar ku!"
+    "checkLoginDetails": "Don Allah duba bayanan shigar ku!",
+    "invalidEmail": "Tsarin imel ba daidai ba ne",
+    "signupError": "Kuskure Na Rijista",
+    "register": "Mai amfani ya rigista",
+    "success": "Rijista ta yi!",
+    "user":"Kuskure wajen samun mai amfanian",
+    "details":"Da fatan za ka bayar da bayananka!",
+    "error":"Kuskure!",
+    "failed":"Kwamfuta ta kasa loda rukunin. Da fatan sake gwada daga baya.",
+    "deleted":"An goge"
+
+    
   },
   "common":{
     "ok":"To"

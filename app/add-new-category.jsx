@@ -65,7 +65,7 @@ export default function AddNewCategory() {
         },
       });
 
-      ToastAndroid.show("Category Created!", ToastAndroid.SHORT);
+      ToastAndroid.show(translations.cat?.added, ToastAndroid.SHORT);
     }
   };
   return (

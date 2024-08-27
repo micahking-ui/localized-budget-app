@@ -23,34 +23,43 @@ export default function SignUpAuth() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { translations } = useContext(TranslationContext);
+  const [firstName, setFirstName] = useState('');
+const [lastName, setLastName] = useState('');
   const router = useRouter();
-  
-  
 
   async function signUpWithEmail() {
-    setLoading(true);
-    
-      try {
-        const { error } = await supabase.auth.signUp({
-          email: email,
-          password: password,
-        });
-  
-        if (error) {
-          Alert.alert("Sign Up Error", error.message, );
-        
-        } else {
-          router.replace("/(auth)/login");
-          ToastAndroid.show("Sign Up Successful!", ToastAndroid.SHORT);
-        }
-      } catch (error) {
-        
-       
-          Alert.alert("Sign Up Error", error.message);
-          ToastAndroid.show("Please supply your details!", ToastAndroid.TOP);
-       
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      Alert.alert(translations.errors?.signupError, translations.errors?.invalidEmail);
+      return;
     }
-  
+
+    setLoading(true);
+
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+          },
+        },
+      });
+
+      if (error) {
+        if (email && password) {
+          Alert.alert(translations.errors?.signupError, translations.errors?.register);
+          return;
+        } 
+      } else {
+        router.replace("/(auth)/login");
+        ToastAndroid.show(translations.errors?.success, ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      Alert.alert(translations.errors?.signupError, translations.errors?.details);
+      ToastAndroid.show(translations.errors?.details, ToastAndroid.TOP);
+    }
   }
 
   return (
@@ -65,27 +74,31 @@ export default function SignUpAuth() {
         <View style={styles.container}>
           <Image
             source={require("../../assets/user.png")}
-            style={{
-              width: 90,
-              height: 90,
-              borderRadius: 99,
-              alignSelf: "center",
-              elevation: 30,
-            }}
+            style={styles.imgSign}
           />
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "poppins-bold",
-              color: "#333",
-              marginTop: 20,
-              paddingHorizontal: 18,
-              textAlign: "center",
-            }}
-          >
+          <Text style={styles.signWelcome}>
             {translations.details?.welcome2}
           </Text>
-          
+          <View style={[styles.verticallySpaced, styles.mt20]}>
+          <TextInput
+            style={styles.textInput}
+            label="First Name"
+            onChangeText={(text) => setFirstName(text)}
+            value={firstName}
+            placeholder={translations.details?.firstname}
+            autoCapitalize={"words"}
+          />
+        </View>
+        <View style={styles.verticallySpaced}>
+          <TextInput
+            style={styles.textInput}
+            label="Last Name"
+            onChangeText={(text) => setLastName(text)}
+            value={lastName}
+            placeholder={translations.details?.lastname}
+            autoCapitalize={"words"}
+          />
+        </View>
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <TextInput
               style={styles.textInput}
@@ -96,10 +109,7 @@ export default function SignUpAuth() {
               autoCapitalize={"none"}
             />
           </View>
-          <View
-            style={
-              styles.verticallySpaced}
-          >
+          <View style={styles.verticallySpaced}>
             <TextInput
               style={[styles.textInput, { flex: 1 }]}
               onChangeText={(text) => setPassword(text)}
@@ -108,49 +118,54 @@ export default function SignUpAuth() {
               placeholder={translations.details?.password}
               autoCapitalize={"none"}
             />
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal:10 }}>
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
+            <View
               style={{
-                width: 20,
-                height: 20,
-                borderRadius: 4,
-                borderWidth: 1,
-                borderColor: "#00698f",
-                justifyContent: "center",
+                flexDirection: "row",
                 alignItems: "center",
+                paddingHorizontal: 10,
               }}
             >
-              {showPassword ? (
-                <View
-                  style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 2,
-                    backgroundColor: "#00698f",
-                  }}
-                />
-              ) : null}
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: "poppins-medium",
-                color: "#00698f",
-                marginLeft: 12,
-              }}
-            >
-              {showPassword ?  translations.details?.hide :translations.details?.show}
-            </Text>
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={styles.showpassword}
+              >
+                {showPassword ? (
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 2,
+                      backgroundColor: "#00698f",
+                    }}
+                  />
+                ) : null}
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "poppins-medium",
+                  color: "#00698f",
+                  marginLeft: 12,
+                }}
+              >
+                {showPassword
+                  ? translations.details?.hide
+                  : translations.details?.show}
+              </Text>
             </View>
           </View>
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <View style={styles.ButtonContainer}>
-              <TouchableOpacity disabled={!email || !password} onPress={signUpWithEmail}>
-               
+              <TouchableOpacity
+                disabled={!email || !password}
+                onPress={signUpWithEmail}
+              >
+                {loading ? (
+                  <ActivityIndicator size="small" color="#00698f" />
+                ) : (
                   <Text style={styles.ButtonText}>
                     {translations.details?.signup}
                   </Text>
-              
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -204,7 +219,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   container: {
-    marginTop: 80,
+    marginTop: 20,
     padding: 12,
     justifyContent: "center",
     elevation: 1,
@@ -225,9 +240,33 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderStyle: "solid",
     borderWidth: 1,
-    padding: 12,
+    padding: 10,
     margin: 8,
     fontFamily: "poppins",
     fontSize: 16,
+  },
+  imgSign: {
+    width: 90,
+    height: 90,
+    borderRadius: 99,
+    alignSelf: "center",
+    elevation: 30,
+  },
+  signWelcome: {
+    fontSize: 20,
+    fontFamily: "poppins-bold",
+    color: "#333",
+    marginTop: 20,
+    paddingHorizontal: 18,
+    textAlign: "center",
+  },
+  showpassword: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: "#00698f",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

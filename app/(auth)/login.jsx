@@ -71,23 +71,10 @@ export default function Auth() {
         <View style={styles.container}>
           <Image
             source={require("../../assets/user.png")}
-            style={{
-              width: 90,
-              height: 90,
-              borderRadius: 99,
-              alignSelf: "center",
-              elevation: 30,
-            }}
+            style={styles.loginImg}
           />
           <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "poppins-bold",
-              color: "#333",
-              marginTop: 20,
-              paddingHorizontal: 18,
-              textAlign: "center",
-            }}
+            style={styles.loginWelcome}
           >
             {translations.details?.welcome}
           </Text>
@@ -121,15 +108,7 @@ export default function Auth() {
             >
               <TouchableOpacity
                 onPress={() => setShowPassword(!showPassword)}
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 4,
-                  borderWidth: 1,
-                  borderColor: "#00698f",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                style={styles.showpassword}
               >
                 {showPassword ? (
                   <View
@@ -247,4 +226,28 @@ const styles = StyleSheet.create({
     fontFamily: "poppins",
     fontSize: 16,
   },
+  loginImg:{
+    width: 90,
+    height: 90,
+    borderRadius: 99,
+    alignSelf: "center",
+    elevation: 30,
+  },
+  loginWelcome:{
+    fontSize: 20,
+    fontFamily: "poppins-bold",
+    color: "#333",
+    marginTop: 20,
+    paddingHorizontal: 18,
+    textAlign: "center",
+  },
+  showpassword:{
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: "#00698f",
+    justifyContent: "center",
+    alignItems: "center",
+  }
 });

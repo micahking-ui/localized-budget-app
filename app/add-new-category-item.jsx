@@ -59,7 +59,7 @@ export default function AddNewCategoryItems() {
     console.log("file upload", data);
     if (data) {
       const fileUrl =
-        "https://vnwmfpqiuciievroggyx.supabase.co/storage/v1/object/public/images/" +
+        "" +
         fileName +
         ".png";
 
@@ -76,7 +76,7 @@ export default function AddNewCategoryItems() {
           },
         ])
         .select();
-      ToastAndroid.show("New Item Added!!!", ToastAndroid.SHORT);
+      ToastAndroid.show(translations.item?.added, ToastAndroid.SHORT);
       console.log(data);
       setLoading(false);
       router.replace({

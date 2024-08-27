@@ -64,7 +64,7 @@ export default function CourseInfo({ categoryData }) {
             .eq("category_id", categoryData.id);
 
           await supabase.from("Category").delete().eq("id", categoryData.id);
-          ToastAndroid.show("Category Deleted", ToastAndroid.SHORT);
+          ToastAndroid.show("translations.errors?.deleted", ToastAndroid.SHORT);
           router.replace("/(tabs)/home/");
         },
       },
@@ -140,9 +140,9 @@ export default function CourseInfo({ categoryData }) {
                   color:Colors.ORANGE,
                   textAlign: "justify",
                   fontSize: 15,
+                  
                 }}
               >
-                <Ionicons name="alert" size={20} color={Colors.RED} />
               {translations.advices?.advice}
               </Text>
               <Text style={{ fontFamily: "poppins-bold",   fontSize: 15, }}>
@@ -166,23 +166,24 @@ export default function CourseInfo({ categoryData }) {
             </View>
           )}
           <TouchableOpacity onPress={toggleAdvice}>
-            <View style={{ display: "flex", flexDirection: "row" }}>
+            <View style={{ display: "flex", flexDirection: "row", justifyContent:'space-between' }}>
               <Text
                 style={{
                   fontFamily: "poppins-medium",
                   color:Colors.ORANGE,
                   marginLeft: 12,
-                  marginTop:-4
+                  justifyContent:"space-evenly",
+                  alignSelf:'center'
                 }}
               >
-                <Ionicons name="alert-circle" size={20} color={Colors.ORANGE} />
+                <Ionicons name="alert-circle" size={15} color={Colors.ORANGE}/>
                 {showAdvice ? translations.advices?.hide : translations.advices?.show}
               </Text>
               <Ionicons
                 name={showAdvice ? "chevron-up" : "chevron-down"}
-                size={16}
-                color="#00698f"
-                style={{ marginLeft: 5, marginTop: 7 }}
+                size={14}
+                color={Colors.ORANGE}
+                style={{ marginLeft: 5, marginTop: 2 }}
               />
             </View>
           </TouchableOpacity>

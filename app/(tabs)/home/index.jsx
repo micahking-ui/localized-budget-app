@@ -1,6 +1,6 @@
 //importation of the components and dependency
 import { View, ScrollView, StyleSheet, RefreshControl } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useRouter } from "expo-router";
 import Colors from "../../../utils/Colors";
 import Header from "../../../components/Header";
@@ -9,10 +9,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "../../lib/supabase-client";
 import CircularChart from "../../../components/CircularChart";
 import { Alert } from "react-native";
+import { TranslationContext } from "../../../contexts/translationContext";
 
 //function declaration
 export default function Home() {
-
+const {translations}=useContext(TranslationContext);
   const router = useRouter();
   const [loading, setloading] = useState(false);
   const [categoryList, setCategoryList] = useState();
@@ -36,12 +37,12 @@ export default function Home() {
         setCategoryList(data);
         data && setloading(false);
       } else {
-        Alert.alert("Error accessing User");
+        Alert.alert(translations.errors?.user);
       }
     } catch (error) {
       Alert.alert(
-        "Error",
-        "Failed to load categories. Please try again later."
+        translations.errors?.error,
+        translations.errors?.failed
       );
       console.error(error);
     }

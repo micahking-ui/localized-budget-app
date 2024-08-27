@@ -11,7 +11,7 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff",
-      "text":" Kasafin Kudi (NaijaBudget)"
+      "text": " Kasafin Kudi (NaijaBudget)"
     },
     "ios": {
       "supportsTablet": true
@@ -20,15 +20,23 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#ffffff",
-          "text":" Kasafin Kudi (NaijaBudget)"
+        "text": " Kasafin Kudi (NaijaBudget)"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png",
-       "bundler": "metro"
+      "bundler": "metro"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f7b06436-a9d5-43c7-9898-df6d47ee8be1"
+      }
+    }
   }
 }

@@ -69,13 +69,10 @@ export default function ExpensePage() {
           setOverallTotal(overallTotal);
         }
       } else {
-        Alert.alert("Error accessing User");
+        Alert.alert(translations.errors?.user);
       }
     } catch (error) {
-      Alert.alert(
-        "Error",
-        "Failed to load categories. Please try again later."
-      );
+     
       console.error(error);
     }
   };
@@ -118,6 +115,7 @@ export default function ExpensePage() {
                   <View style={styles.lineBorder}></View>
                 </View>
               ))}
+              
             </View>
           ))}
         </ScrollView>

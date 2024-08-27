@@ -7,14 +7,16 @@
     "name1": "Category name",
     "cost1": "Total Budget",
     "create": "Create",
-    "heading": "Add New Category"
+    "heading": "Add New Category",
+    "added": "New Category Added"
   },
   "item": {
     "name1": "Item name",
     "cost": "Cost",
     "add": "Add",
     "note": "Note",
-    "heading": "Add New Items"
+    "heading": "Add New Items",
+    "added":"New item added"
   },
   "details": {
     "welcome": "Welcome!",
@@ -27,7 +29,9 @@
     "noaccount": "Don't have an account?",
     "account": "Already have an account! ",
     "hide": "Hide",
-    "show": "Show Password!"
+    "show": "Show Password!",
+    "firstname":"First Name",
+    "lastname": "Surname:"
 
   },
   "itemlist":{
@@ -83,7 +87,16 @@
   "errors":{
     "loginError": "Sign in error",
     "invalidCredentials": "Invalid login credentials",
-    "checkLoginDetails": "Please check your login details!"
+    "checkLoginDetails": "Please check your login details!",
+    "invalidEmail": "Invalid email format",
+    "signupError": "Sign Up Error",
+    "register": "User already registered",
+    "success": "Sign Up Successful!",
+    "user":"Error accessing user",
+    "deleted":"Deleted",
+    "details":"Supply your details",
+    "error":"Error",
+    "failed":"Failed to load categories. Please try again later."
   },
   "common":{
     "ok":"OK"

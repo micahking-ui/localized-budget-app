@@ -14,14 +14,14 @@ import { supabase } from "../../app/lib/supabase-client";
 import { TranslationContext } from "../../contexts/translationContext";
 
 export default function CourseItemList({ categoryData, setUpdateRecord }) {
-  const {translation}=useContext(TranslationContext);
+  const {translations}=useContext(TranslationContext);
   const [expandItems, setExpandItems] = useState();
   const onDeleteItem = async (id) => {
     const { error } = await supabase
       .from("CategoryItems")
       .delete()
       .eq("id", id);
-    ToastAndroid.show("Item Deleted!", ToastAndroid.SHORT);
+    ToastAndroid.show(translations.errors?.deleted, ToastAndroid.SHORT);
     setUpdateRecord(true);
   };
 
@@ -37,7 +37,7 @@ export default function CourseItemList({ categoryData, setUpdateRecord }) {
                 onPress={() => setExpandItems(index)}
               >
                 <Image
-                  source={{ uri: item.image }}
+                  source={{ uri:item.image }}
                   style={{ width: 70, height: 70, borderRadius: 15 }}
                 />
                 <View style={{ flex: 1, marginLeft: 10 }}>

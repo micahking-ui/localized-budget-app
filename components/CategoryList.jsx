@@ -58,7 +58,7 @@ export default function CategoryList({ categoryList }) {
                 <View>
                   <Text style={styles.categoryText}>{category.name}</Text>
                   <Text style={styles.countItem}>
-                    {category?.CategoryItems?.length} Items
+                    {category?.CategoryItems?.length} {translations.itemlist?.items}
                   </Text>
                 </View>
                 <Text style={styles.totalAmount}>
