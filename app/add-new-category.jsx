@@ -1,3 +1,4 @@
+// importation of libraries
 import {
   View,
   Text,
@@ -22,25 +23,26 @@ import { TranslationContext } from "../contexts/translationContext";
 
 export default function AddNewCategory() {
   const router = useRouter();
-
-  const [selectedIcon, setSelectedIcon] = useState("BT");
-  const [selectedColor, setSelectedColor] = useState(Colors.BLACK);
+  const [selectedIcon, setSelectedIcon] = useState("KSF");
+  const [selectedColor, setSelectedColor] = useState(Colors.PRIMARY);
   const [categoryName, setCategoryName] = useState();
   const [totalBudget, setTotalBudget] = useState();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const { translations } = useContext(TranslationContext);
 
+  //run when application mmounted
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUser(user);
       } else {
-        Alert.alert("Error accessing User");
+        Alert.alert(translations.errors?.user);
       }
     });
   }, [translations]);
 
+  //inserting category data
   const onCreatCategory = async () => {
     setLoading(true);
     const { data, error } = await supabase
@@ -56,6 +58,8 @@ export default function AddNewCategory() {
       ])
       .select();
     console.log(data);
+
+    // redirecting user to category details page
     if (data) {
       setLoading(false);
       router.replace({
@@ -68,21 +72,17 @@ export default function AddNewCategory() {
       ToastAndroid.show(translations.cat?.added, ToastAndroid.SHORT);
     }
   };
+
+  //user interface designed
   return (
     <KeyboardAvoidingView>
       <Stack.Screen
-      options={{
-        headerShown: true,
-        headerTitle: translations.cat?.heading
-      }}/>
-      <ScrollView
-        style={{
-          marginTop: 10,
-          padding: 20,
-          backgroundColor: Colors.WHITE,
-          height: "100",
+        options={{
+          headerShown: true,
+          headerTitle: translations.cat?.heading,
         }}
-      >
+      />
+      <ScrollView style={styles.scrollView}>
         <View
           style={{
             justifyContent: "center",
@@ -91,7 +91,7 @@ export default function AddNewCategory() {
         >
           <TextInput
             style={[styles.iconInput, { backgroundColor: selectedColor }]}
-            maxLength={2}
+            maxLength={3}
             onChangeText={(value) => setSelectedIcon(value)}
           >
             {selectedIcon}
@@ -106,11 +106,7 @@ export default function AddNewCategory() {
           <MaterialIcons name="local-offer" size={24} color={Colors.GRAY} />
           <TextInput
             placeholder={translations.cat?.name1}
-            style={{
-              fontSize: 16,
-              fontFamily: "poppins-medium",
-              width: "100%",
-            }}
+            style={styles.inputText}
             onChangeText={(value) => setCategoryName(value)}
           />
         </View>
@@ -118,11 +114,7 @@ export default function AddNewCategory() {
           <FontAwesome6 name="naira-sign" size={24} color={Colors.GRAY} />
           <TextInput
             placeholder={translations.cat?.cost1}
-            style={{
-              fontSize: 16,
-              fontFamily: "poppins-medium",
-              width: "100%",
-            }}
+            style={styles.inputText}
             keyboardType="numeric"
             onChangeText={(value) => setTotalBudget(value)}
           />
@@ -135,24 +127,21 @@ export default function AddNewCategory() {
           {loading ? (
             <ActivityIndicator color={Colors.WHITE} />
           ) : (
-            <Text
-              style={{
-                textAlign: "center",
-                alignItems: "center",
-                fontFamily: "poppins-bold",
-                fontSize: 16,
-                color: "white",
-              }}
-            >
-              {translations.cat?.create}
-            </Text>
+            <Text style={styles.createText}>{translations.cat?.create}</Text>
           )}
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
+//styling
 const styles = StyleSheet.create({
+  scrollView: {
+    marginTop: 10,
+    padding: 20,
+    backgroundColor: Colors.WHITE,
+    height: "100",
+  },
   iconInput: {
     textAlign: "center",
     fontSize: 24,
@@ -174,10 +163,22 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   Tbutton: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.PRIMARY,
     padding: 15,
     borderRadius: 10,
     borderColor: Colors.GRAY,
     marginTop: 30,
+  },
+  inputText: {
+    fontSize: 16,
+    fontFamily: "poppins-medium",
+    width: "100%",
+  },
+  createText: {
+    textAlign: "center",
+    alignItems: "center",
+    fontFamily: "poppins-bold",
+    fontSize: 16,
+    color: "white",
   },
 });

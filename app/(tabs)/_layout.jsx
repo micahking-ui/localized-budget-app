@@ -9,11 +9,11 @@ export default function TabLayout() {
     <TranslationProvider>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Color.BLACK,
+          tabBarActiveTintColor: Color.PRIMARY,
           headerShown: false,
           headerShadowVisible: false,
           headerStyle: {
-            backgroundColor: Color.BLACK,
+            backgroundColor: Color.PRIMARY,
           },
         }}
       >

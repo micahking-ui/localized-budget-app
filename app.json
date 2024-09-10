@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#ffffff",
         "text": " Kasafin Kudi (NaijaBudget)"
-      }
+      },
+      "package": "com.micahking.kasafinkudi"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -35,7 +36,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "f7b06436-a9d5-43c7-9898-df6d47ee8be1"
+        "projectId": "80a48e8e-be5f-4e39-ad62-6e51ba75a7fe"
       }
     }
   }

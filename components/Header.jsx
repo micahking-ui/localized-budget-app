@@ -11,27 +11,32 @@ import React, { useContext, useEffect, useState } from "react";
 import { supabase } from "../app/lib/supabase-client";
 import Colors from "../utils/Colors";
 import { TranslationContext } from "../contexts/translationContext";
+import { router, useRouter } from "expo-router";
 
 export default function HomePage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const { translations, handleLanguageChange } = useContext(TranslationContext);
+  const router = useRouter();
 
+  //getting user info
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUser(user);
       } else {
-        Alert.alert("Error accessing User");
+        Alert.alert(translations.errors?.user);
       }
     });
   }, []);
-  // used to get user data
 
+  // used to get user data
   return (
     <View style={{ paddingTop: 18 }}>
       <View style={styles.headingStyle}>
-        <Image source={require("../assets/user.png")} style={styles.img} />
+        <TouchableOpacity onPress={() => router.replace("/(tabs)/profile")}>
+          <Image source={require("../assets/user.png")} style={styles.img} />
+        </TouchableOpacity>
         <View style={styles.container}>
           <View>
             <Text
@@ -74,7 +79,7 @@ export default function HomePage() {
                 borderRadius: 5,
               }}
             >
-              <Text style={{ color: Colors.BLACK }}>Ha</Text>
+              <Text style={{ color: Colors.PRIMARY }}>Ha</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => handleLanguageChange("english")}

@@ -15,8 +15,8 @@ import { supabase } from "../lib/supabase-client";
 import { Link, useRouter } from "expo-router";
 import Colors from "../../utils/Colors";
 import { Ionicons } from "react-native-vector-icons";
-import { getUserData, storeUserData } from "../../utils/services";
 import { TranslationContext } from "../../contexts/translationContext";
+import NetInfo from "@react-native-community/netinfo"
 
 export default function Auth() {
   const { translations } = useContext(TranslationContext);
@@ -24,43 +24,65 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const router = useRouter();
 
+  //handling network error
+  let isConnected = true;
+  NetInfo.addEventListener(state => {
+    isConnected = state.isConnected;
+  });
+  //signIn function
   async function signInWithEmail() {
+    
+    // handling network error displaying
+    if (!isConnected) {
+      Alert.alert(
+      translations.errors?.networkerror,
+       translations.errors?.requestfail,
+        [
+          {
+            text: translations.common?.ok,
+            onPress: () => console.log("OK Pressed"),
+            style: "default",
+          },
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
+
+    //handling error message
     if (error) {
       Alert.alert(
         translations.errors?.loginError,
         translations.errors?.invalidCredentials,
         [
           {
-            text: translations.common?.ok, // Custom text for the button
+            text: translations.common?.ok, 
             onPress: () => console.log("OK Pressed"),
-            style: "default", // You can use "default", "cancel", or "destructive"
+            style: "default", 
           },
         ],
-        { cancelable: false } // Prevents the alert from being dismissed by tapping outside
+        { cancelable: false } 
       );
       ToastAndroid.show(
         translations.errors?.checkLoginDetails,
         ToastAndroid.TOP
       );
     } else {
-    
-     
-      ToastAndroid.show("Login Successful!", ToastAndroid.SHORT);
-      // Navigate to home screen or perform other actions
+      ToastAndroid.show(translations.errors?.loginsuccess, ToastAndroid.SHORT);
+      router.replace("/(tabs)/home")
     }
     setLoading(false);
   }
-
+// frontend designed for entry page
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.BLACK, paddingTop: 20 }}>
+    <View style={{ flex: 1, backgroundColor: Colors.PRIMARY, paddingTop: 20 }}>
       <TouchableOpacity
         onPress={() => router.push("/")}
         style={{ padding: 10 }}
@@ -183,7 +205,7 @@ export default function Auth() {
 
 const styles = StyleSheet.create({
   ButtonContainer: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.PRIMARY,
     borderRadius: 15,
     paddingVertical: 8,
     paddingHorizontal: 25,

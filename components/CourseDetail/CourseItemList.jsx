@@ -38,7 +38,7 @@ export default function CourseItemList({ categoryData, setUpdateRecord }) {
               >
                 <Image
                   source={{ uri:item.image }}
-                  style={{ width: 70, height: 70, borderRadius: 15 }}
+                  style={{ width: 70, height: 70, borderRadius: 15, borderWidth:1, borderColor:Colors.GRAY}}
                 />
                 <View style={{ flex: 1, marginLeft: 10 }}>
                   <Text style={styles.name}>{item.name}</Text>

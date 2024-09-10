@@ -18,7 +18,8 @@ const {translations}=useContext(TranslationContext);
   const [loading, setloading] = useState(false);
   const [categoryList, setCategoryList] = useState();
   const [user, setUser] = useState(null);
-  //use that execute once mounted
+
+  //use to execute once mounted
   useEffect(() => {
     getCategoryList();
   }, []);
@@ -26,7 +27,6 @@ const {translations}=useContext(TranslationContext);
   //getting category data from the database
   const getCategoryList = async () => {
     try {
-      
       const {data: { user }, } = await supabase.auth.getUser();
       if (user) {
         setUser(user);
@@ -47,6 +47,7 @@ const {translations}=useContext(TranslationContext);
       console.error(error);
     }
   };
+  //user interface
   return (
     <View
       style={{
@@ -65,7 +66,7 @@ const {translations}=useContext(TranslationContext);
         <View
           style={{
             padding: 20,
-            backgroundColor: Colors.BLACK,
+            backgroundColor: Colors.PRIMARY,
             height: 190,
           }}
         >
@@ -81,12 +82,15 @@ const {translations}=useContext(TranslationContext);
           <CategoryList categoryList={categoryList} />
         </View>
       </ScrollView>
+      {/**Creating category button */}
       <Link href={"/add-new-category"} style={styles.addButton}>
-        <Ionicons name="add-circle" size={64} color={Colors.BLACK} />
+        <Ionicons name="add-circle" size={64} color={Colors.PRIMARY} />
       </Link>
     </View>
   );
 }
+
+//styling
 const styles = StyleSheet.create({
   addButton: {
     position: "absolute",

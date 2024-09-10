@@ -7,9 +7,9 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
   ToastAndroid,
 } from "react-native";
+
 import { supabase } from "../lib/supabase-client";
 import { Link, useRouter } from "expo-router";
 import Colors from "../../utils/Colors";
@@ -17,25 +17,52 @@ import { Ionicons } from "react-native-vector-icons";
 import { Image } from "react-native";
 import { TranslationContext } from "../../contexts/translationContext";
 
+import NetInfo from "@react-native-community/netinfo";
 export default function SignUpAuth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { translations } = useContext(TranslationContext);
-  const [firstName, setFirstName] = useState('');
-const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
   const router = useRouter();
 
+  //network access
+  let isConnected = true;
+  NetInfo.addEventListener((state) => {
+    isConnected = state.isConnected;
+  });
+  //signup function
   async function signUpWithEmail() {
-    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-      Alert.alert(translations.errors?.signupError, translations.errors?.invalidEmail);
+    //if network access fail
+    if (!isConnected) {
+      Alert.alert(
+        translations.errors?.networkerror,
+        translations.errors?.requestfail,
+        [
+          {
+            text: translations.common?.ok,
+            onPress: () => console.log("OK Pressed"),
+            style: "default",
+          },
+        ],
+        { cancelable: false }
+      );
       return;
     }
+// signup error handler 
 
-    setLoading(true);
-
+// email format error catching
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      Alert.alert(
+        translations.errors?.signupError,
+        translations.errors?.invalidEmail
+      );
+      return;
+    }
     try {
+      //sign uo function
       const { error } = await supabase.auth.signUp({
         email: email,
         password: password,
@@ -46,24 +73,31 @@ const [lastName, setLastName] = useState('');
           },
         },
       });
-
-      if (error) {
-        if (email && password) {
+// email length
+      if (password.length < 6) {
+        Alert.alert(translations.errors?.signupError, translations.errors?.length);
+        return;
+      }
+      //if user already exist
+      else if (error) {
+        if (email || password) {
           Alert.alert(translations.errors?.signupError, translations.errors?.register);
           return;
-        } 
-      } else {
+        }
+      }
+      //new user redirect to login screen
+      else {
         router.replace("/(auth)/login");
         ToastAndroid.show(translations.errors?.success, ToastAndroid.SHORT);
       }
-    } catch (error) {
-      Alert.alert(translations.errors?.signupError, translations.errors?.details);
-      ToastAndroid.show(translations.errors?.details, ToastAndroid.TOP);
-    }
+      } catch (error) {
+        Alert.alert(translations.errors?.signupError, translations.errors?.details);
+        ToastAndroid.show(translations.errors?.details, ToastAndroid.TOP);
+      }
   }
-
+  //user interface
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.BLACK, paddingTop: 20 }}>
+    <View style={{ flex: 1, backgroundColor: Colors.PRIMARY, paddingTop: 20 }}>
       <TouchableOpacity
         onPress={() => router.push("/(auth)/login")}
         style={{ padding: 10 }}
@@ -80,26 +114,26 @@ const [lastName, setLastName] = useState('');
             {translations.details?.welcome2}
           </Text>
           <View style={[styles.verticallySpaced, styles.mt20]}>
-          <TextInput
-            style={styles.textInput}
-            label="First Name"
-            onChangeText={(text) => setFirstName(text)}
-            value={firstName}
-            placeholder={translations.details?.firstname}
-            autoCapitalize={"words"}
-          />
-        </View>
-        <View style={styles.verticallySpaced}>
-          <TextInput
-            style={styles.textInput}
-            label="Last Name"
-            onChangeText={(text) => setLastName(text)}
-            value={lastName}
-            placeholder={translations.details?.lastname}
-            autoCapitalize={"words"}
-          />
-        </View>
-          <View style={[styles.verticallySpaced, styles.mt20]}>
+            <TextInput
+              style={styles.textInput}
+              label="First Name"
+              onChangeText={(text) => setFirstName(text)}
+              value={firstName}
+              placeholder={translations.details?.firstname}
+              autoCapitalize={"words"}
+            />
+          </View>
+          <View style={styles.verticallySpaced}>
+            <TextInput
+              style={styles.textInput}
+              label="Last Name"
+              onChangeText={(text) => setLastName(text)}
+              value={lastName}
+              placeholder={translations.details?.lastname}
+              autoCapitalize={"words"}
+            />
+          </View>
+          <View style={styles.verticallySpaced}>
             <TextInput
               style={styles.textInput}
               label="Email"
@@ -159,13 +193,9 @@ const [lastName, setLastName] = useState('');
                 disabled={!email || !password}
                 onPress={signUpWithEmail}
               >
-                {loading ? (
-                  <ActivityIndicator size="small" color="#00698f" />
-                ) : (
-                  <Text style={styles.ButtonText}>
-                    {translations.details?.signup}
-                  </Text>
-                )}
+                <Text style={styles.ButtonText}>
+                  {translations.details?.signup}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -200,10 +230,10 @@ const [lastName, setLastName] = useState('');
     </View>
   );
 }
-
+//styling
 const styles = StyleSheet.create({
   ButtonContainer: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.PRIMARY,
     borderRadius: 15,
     paddingVertical: 8,
     paddingHorizontal: 25,
@@ -240,7 +270,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderStyle: "solid",
     borderWidth: 1,
-    padding: 10,
+    padding: 8,
     margin: 8,
     fontFamily: "poppins",
     fontSize: 16,

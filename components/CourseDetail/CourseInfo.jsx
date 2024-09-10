@@ -1,3 +1,4 @@
+//importation of dependencies and components
 import {
   View,
   Text,
@@ -13,20 +14,20 @@ import { supabase } from "../../app/lib/supabase-client";
 import { Link, useRouter } from "expo-router";
 import { TranslationContext } from "../../contexts/translationContext";
 
-
-
 export default function CourseInfo({ categoryData }) {
+  //declaration of constant
   const router = useRouter();
   const [totalCost, setTotalCost] = useState();
   const [perTotal, setPerTotal] = useState(0);
   const [sortedItems, setSortedItems] = useState([]);
   const [exceedsBudget, setExceedsBudget] = useState(false);
   const [showAdvice, setShowAdvice] = useState(true);
-  const {translations}=useContext(TranslationContext)
+  const { translations } = useContext(TranslationContext);
 
   useEffect(() => {
     categoryData && calculateTotalPerc();
   }, [categoryData]);
+
   const calculateTotalPerc = () => {
     let total = 0;
     const sortedItems = categoryData?.CategoryItems?.sort(
@@ -46,7 +47,7 @@ export default function CourseInfo({ categoryData }) {
     }
     setPerTotal(per);
   };
-
+  // Function for deleting category data
   const onDeleteCategory = async () => {
     Alert.alert(translations.alerts?.sure, translations.alerts?.really, [
       {
@@ -70,6 +71,7 @@ export default function CourseInfo({ categoryData }) {
       },
     ]);
   };
+  // Show advice or suggestion order
   const toggleAdvice = () => {
     setShowAdvice(!showAdvice);
   };
@@ -87,7 +89,7 @@ export default function CourseInfo({ categoryData }) {
         <View style={{ flex: 1, marginLeft: 20 }}>
           <Text style={styles.CategoryName}>{categoryData?.name}</Text>
           <Text style={styles.CategoryItem}>
-          {translations.itemlist?.items} {categoryData?.CategoryItems?.length} 
+            {translations.itemlist?.items} {categoryData?.CategoryItems?.length}
           </Text>
           <Text style={styles.url} numberOfLines={2}>
             {new Date(categoryData?.created_at).toLocaleDateString()}
@@ -116,6 +118,7 @@ export default function CourseInfo({ categoryData }) {
           />{" "}
         </Link>
       </View>
+
       {/**Prograss bar */}
       <View style={styles.AmountContainer}>
         <Text style={{ fontFamily: "poppins-medium" }}>₦ {totalCost}</Text>
@@ -123,13 +126,13 @@ export default function CourseInfo({ categoryData }) {
           {categoryData?.assigned_budget - totalCost}
         </Text>
         <Text style={{ fontFamily: "poppins-medium" }}>
-         {translations.itemlist?.total}: ₦ {categoryData?.assigned_budget}
+          {translations.itemlist?.total}: ₦ {categoryData?.assigned_budget}
         </Text>
       </View>
       <View style={styles.prograssBarMain}>
         <View style={[styles.prograssBarSub, { width: perTotal + "%" }]}></View>
       </View>
-
+      {/**Exceed budget suggestion order */}
       {exceedsBudget && (
         <View style={{ marginTop: 20 }}>
           {showAdvice && (
@@ -137,15 +140,14 @@ export default function CourseInfo({ categoryData }) {
               <Text
                 style={{
                   fontFamily: "poppins-medium",
-                  color:Colors.ORANGE,
+                  color: Colors.ORANGE,
                   textAlign: "justify",
                   fontSize: 15,
-                  
                 }}
               >
-              {translations.advices?.advice}
+                {translations.advices?.advice}
               </Text>
-              <Text style={{ fontFamily: "poppins-bold",   fontSize: 15, }}>
+              <Text style={{ fontFamily: "poppins-bold", fontSize: 15 }}>
                 {translations.advices?.order}
               </Text>
               <View>
@@ -159,25 +161,36 @@ export default function CourseInfo({ categoryData }) {
                     >
                       {index + 1}. {item.name}
                     </Text>
-                    <Text  style={{ fontFamily: "poppins-bold", fontSize: 16 }} > ₦{item.cost}</Text>
+                    <Text style={{ fontFamily: "poppins-bold", fontSize: 16 }}>
+                      {" "}
+                      ₦{item.cost}
+                    </Text>
                   </View>
                 ))}
               </View>
             </View>
           )}
           <TouchableOpacity onPress={toggleAdvice}>
-            <View style={{ display: "flex", flexDirection: "row", justifyContent:'space-between' }}>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
               <Text
                 style={{
                   fontFamily: "poppins-medium",
-                  color:Colors.ORANGE,
+                  color: Colors.ORANGE,
                   marginLeft: 12,
-                  justifyContent:"space-evenly",
-                  alignSelf:'center'
+                  justifyContent: "space-evenly",
+                  alignSelf: "center",
                 }}
               >
-                <Ionicons name="alert-circle" size={15} color={Colors.ORANGE}/>
-                {showAdvice ? translations.advices?.hide : translations.advices?.show}
+                <Ionicons name="alert-circle" size={15} color={Colors.ORANGE} />
+                {showAdvice
+                  ? translations.advices?.hide
+                  : translations.advices?.show}
               </Text>
               <Ionicons
                 name={showAdvice ? "chevron-up" : "chevron-down"}
@@ -249,7 +262,7 @@ const styles = StyleSheet.create({
   prograssBarSub: {
     width: "40%",
     height: 15,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.PRIMARY,
     borderRadius: 99,
   },
 });

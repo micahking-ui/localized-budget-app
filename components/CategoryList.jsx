@@ -7,6 +7,8 @@ import { TranslationContext } from "../contexts/translationContext";
 export default function CategoryList({ categoryList }) {
   const {translations}=useContext(TranslationContext)
   const router = useRouter();
+  
+  //passing category params (id to the next page)
   const onCategoryClick = (category) => {
     router.push({
       pathname: "/category-detail",
@@ -16,6 +18,7 @@ export default function CategoryList({ categoryList }) {
     });
   };
 
+  //calculating total estimated budget
   const calculateTotalCost = (categoryItems) => {
     let totalCost = 0;
     categoryItems.forEach((item) => {
@@ -23,6 +26,9 @@ export default function CategoryList({ categoryList }) {
     });
     return totalCost;
   };
+
+
+  //designing of the user interface
   return (
     <View
       style={{
@@ -71,6 +77,7 @@ export default function CategoryList({ categoryList }) {
     </View>
   );
 }
+//styling components
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,

@@ -12,6 +12,7 @@ export default function ExpensePage() {
   const [itemsData, setItemsData] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
   const [overallTotal, setOverallTotal] = useState(0);
+  
   //getting current date
   useEffect(() => {
     const date = new Date();
@@ -19,12 +20,13 @@ export default function ExpensePage() {
     const month = date.toLocaleString("en-US", { month: "long" }).toLowerCase();
     const year = date.getFullYear();
     setCurrentDate(`${day} ${translations.months?.[month]}, ${year}`);
+
     //getting all items
     getAllItems();
-    console.log("get item", getAllItems);
-    
+    console.log("get item", getAllItems); 
     console.log('translations.months:', translations.months);
   }, [translations]);
+
   //method for getting all category items
   const getAllItems = async () => {
     try {
@@ -76,7 +78,7 @@ export default function ExpensePage() {
       console.error(error);
     }
   };
-
+//user interface designed
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
@@ -123,6 +125,7 @@ export default function ExpensePage() {
     </View>
   );
 }
+//styling components
 const styles = StyleSheet.create({
   currentContainer: {
     display: "flex",
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
   monthExpen: {
     fontSize: 20,
     fontFamily: "poppins-bold",
-    color: Colors.BLACK,
+    color: Colors.PRIMARY,
     opacity: 0.8,
     marginTop: -4,
   },
@@ -216,7 +219,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.PRIMARY,
     paddingTop: 20,
   },
   img: {

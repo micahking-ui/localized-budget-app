@@ -16,27 +16,28 @@ import { Ionicons } from "@expo/vector-icons";
 import { TranslationContext } from "../../../contexts/translationContext";
 
 export default function SettingPage() {
-  const {translations}=useContext(TranslationContext)
+  const { translations } = useContext(TranslationContext);
   const router = useRouter();
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUser(user);
       } else {
-        router.replace("/(auth)/login"); // Redirect to login if no user
+        router.replace("/(auth)/login"); //
       }
     });
   }, []);
-
+//logout function
   const doLogout = async () => {
     try {
       await supabase.auth.signOut();
       setUser(null); // Clear user state
       router.replace("/(auth)/login");
     } catch (error) {
-      Alert.alert("Error Signing Out User", error.message);
+      Alert.alert(translations.errors?.signout);
     }
   };
 
@@ -63,9 +64,19 @@ export default function SettingPage() {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: Colors.WHITE }}>
         <View
-          style={{ padding: 20, paddingTop: 30, backgroundColor: Colors.BLACK }}
+          style={{ padding: 20, paddingTop: 30, backgroundColor: Colors.PRIMARY }}
         >
-          <Text style={{fontFamily:'poppins-bold', paddingTop:10, fontSize:20, color:Colors.WHITE, opacity:0.8}}>{translations.terms?.profile}</Text>
+          <Text
+            style={{
+              fontFamily: "poppins-bold",
+              paddingTop: 10,
+              fontSize: 20,
+              color: Colors.WHITE,
+              opacity: 0.8,
+            }}
+          >
+            {translations.terms?.profile}
+          </Text>
           <View
             style={{
               display: "flex",
@@ -94,49 +105,63 @@ export default function SettingPage() {
             >
               {user?.email.split("@")[0]}
             </Text>
-           
           </View>
         </View>
         <View
           style={{
             paddingTop: 10,
             backgroundColor: "white",
-           
           }}
         >
-           <View style={{backgroundColor:Colors.BLACK, padding:10, marginHorizontal:10, borderRadius:4}}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: "poppins",
-                  color: Colors.WHITE,
-                  textAlign:'center'
-                }}
-              >
-                {user?.email}
-              </Text>
-            </View>
-           <View style={{backgroundColor:Colors.WHITE, padding:10, marginHorizontal:10, borderRadius:4, marginTop:25, elevation:4}}> 
-          <FlatList
-            data={profileMenu}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                onPress={() => {
-                  if (item.id === 3) {
-                    doLogout(); // Call the logout function when the logout button is pressed
-                  } else if (item.id === 1) {
-                    router.push(item.route);
-                  } else {
-                    navigation.navigate(item.route); // Navigate to the specified route for other buttons
-                  }
-                }}
-                style={styles.textContainer}
-              >
-                <Ionicons name={item.icon} size={25} color={Colors.BLACK} />
-                <Text>{item.name} </Text>
-              </TouchableOpacity>
-            )}
-          />
+          <View
+            style={{
+              backgroundColor: Colors.PRIMARY,
+              padding: 10,
+              marginHorizontal: 10,
+              borderRadius: 4,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: "poppins",
+                color: Colors.WHITE,
+                textAlign: "center",
+              }}
+            >
+              {user?.email}
+            </Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: Colors.WHITE,
+              padding: 10,
+              marginHorizontal: 10,
+              borderRadius: 4,
+              marginTop: 25,
+              elevation: 4,
+            }}
+          >
+            <FlatList
+              data={profileMenu}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (item.id === 3) {
+                      doLogout(); // Call the logout function when the logout button is pressed
+                    } else if (item.id === 1) {
+                      router.push(item.route);
+                    } else {
+                      navigation.navigate(item.route); // Navigate to the specified route for other buttons
+                    }
+                  }}
+                  style={styles.textContainer}
+                >
+                  <Ionicons name={item.icon} size={25} color={Colors.PRIMARY} />
+                  <Text>{item.name} </Text>
+                </TouchableOpacity>
+              )}
+            />
           </View>
         </View>
       </View>

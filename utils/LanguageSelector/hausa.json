@@ -9,7 +9,8 @@
     "cost1": "Jimillar kuɗi",
     "create": "Kirkira",
     "heading": "Ƙara Sabuwar Rukuni",
-    "added": "An kara Sabuwar Rukuni"
+    "added": "An kara Sabuwar Rukuni",
+     "update": "An Sabonta Rukuni"
   },
   "item": {
     "name1": "Suna kayan",
@@ -17,7 +18,8 @@
     "add": "Kara",
     "note": "Rubuta bayani",
     "heading": "Kara Sabuwar Abu",
-    "added": "An Kara Sabuwar Abu"
+    "added": "An Kara Sabuwar Abu",
+      "upload":"Sa hoto"
   },
   "details": {
     "welcome": "Barka da Zuwa",
@@ -74,13 +76,13 @@
     "expense": "Kudin",
     "logout": "Fita",
     "profile": "Shafin",
-    "noitems": "Babu abubuwa da aka samu",
+    "noitems": "Babu Kayya da aka samu",
     "today":"Yau Ran"
 
   },   
   "intro":{
     "welcome":" Barka da zuwa ",
-    "welcome1":"Muna farin cikin maraba da ku zuwa wannan manhaja mai sauƙi da amfani don tsara kuɗin ku",
+    "welcome1":" Muna farin cikin maraba da ku zuwa wannan manhaja mai sauƙi da amfani don tsara kuɗin ku",
     "getstarted":"Fara"
   },
   "errors":{
@@ -91,11 +93,17 @@
     "signupError": "Kuskure Na Rijista",
     "register": "Mai amfani ya rigista",
     "success": "Rijista ta yi!",
-    "user":"Kuskure wajen samun mai amfanian",
+    "successlogin": "Ka shiga ciki!",
+    "user":"Kuskure wajen samun mai amfanin",
     "details":"Da fatan za ka bayar da bayananka!",
     "error":"Kuskure!",
     "failed":"Kwamfuta ta kasa loda rukunin. Da fatan sake gwada daga baya.",
-    "deleted":"An goge"
+    "deleted":"An goge",
+    "requestfail":"Duba haɗin yanar gizo.",
+    "networkerror":"Kuskuren cibiyar sadarwa!.",
+    "signout":"Kuskure wajen Ficewa daga Mai Amfani.",
+    "length": "Kalmar sirri ya kamata ta kasance a kalla haruffa 6!"
+   
 
     
   },

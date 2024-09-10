@@ -1,3 +1,4 @@
+// importation
 import {
   View,
   Text,
@@ -24,14 +25,18 @@ export default function EditCategory() {
   const router = useRouter();
   const { categoryId } = useLocalSearchParams();
   const [selectedIcon, setSelectedIcon] = useState("");
-  const [selectedColor, setSelectedColor] = useState(Colors.BLACK);
+  const [selectedColor, setSelectedColor] = useState(Colors.PRIMARY);
   const [categoryName, setCategoryName] = useState("");
   const [totalBudget, setTotalBudget] = useState("");
   const { translations } = useContext(TranslationContext);
   const [loading, setLoading] = useState(false);
+
+ 
   useEffect(() => {
     fetchCategoryData();
   }, [categoryId]);
+
+ //fetching user data for editing
   async function fetchCategoryData() {
     const { data, error } = await supabase
       .from("Category")
@@ -47,6 +52,7 @@ export default function EditCategory() {
       setSelectedColor(data.color);
     }
   }
+  // updating the category 
   const onUpdateCategory = async () => {
     setLoading(true);
     const { data, error } = await supabase
@@ -69,24 +75,20 @@ export default function EditCategory() {
         },
       });
 
-      ToastAndroid.show("Category updated!", ToastAndroid.SHORT);
+      ToastAndroid.show( translations.cat?.update, ToastAndroid.SHORT);
     }
   };
 
+  //user interface design
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView> 
       <Stack.Screen
       options={{
         headerShown: true,
         headerTitle: translations.edit?.header
       }}/>
       <ScrollView
-        style={{
-          marginTop: 10,
-          padding: 20,
-          backgroundColor: Colors.WHITE,
-          height: "100",
-        }}
+        style={styles.scrollView}
       >
         <View
           style={{
@@ -96,7 +98,7 @@ export default function EditCategory() {
         >
           <TextInput
             style={[styles.iconInput, { backgroundColor: selectedColor }]}
-            maxLength={2}
+            maxLength={3}
             value={selectedIcon}
             onChangeText={(value) => setSelectedIcon(value)}
           />
@@ -110,11 +112,7 @@ export default function EditCategory() {
           <MaterialIcons name="local-offer" size={24} color={Colors.GRAY} />
           <TextInput
             placeholder={translations.edit?.name}
-            style={{
-              fontSize: 16,
-              fontFamily: "poppins-medium",
-              width: "100%",
-            }}
+            style={styles.Placeholder}
             value={categoryName}
             onChangeText={(value) => setCategoryName(value)}
           />
@@ -123,16 +121,14 @@ export default function EditCategory() {
           <FontAwesome6 name="naira-sign" size={24} color={Colors.GRAY} />
           <TextInput
             placeholder={translations.edit?.total}
-            style={{
-              fontSize: 16,
-              fontFamily: "poppins-medium",
-              width: "100%",
-            }}
+            style={styles.Placeholder}
             keyboardType="numeric"
             value={totalBudget}
             onChangeText={(value) => setTotalBudget(value)}
           />
         </View>
+
+        {/**Loading activity for  */}
         <TouchableOpacity
           style={styles.Tbutton}
           onPress={onUpdateCategory}
@@ -159,6 +155,7 @@ export default function EditCategory() {
   );
 }
 
+//styling
 const styles = StyleSheet.create({
   iconInput: {
     textAlign: "center",
@@ -181,10 +178,21 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   Tbutton: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.PRIMARY,
     padding: 15,
     borderRadius: 10,
     borderColor: Colors.GRAY,
     marginTop: 30,
   },
+  scrollView:{
+    marginTop: 10,
+    padding: 20,
+    backgroundColor: Colors.WHITE,
+    height: "100",
+  },
+  Placeholder:{
+    fontSize: 16,
+    fontFamily: "poppins-medium",
+    width: "100%",
+  }
 });

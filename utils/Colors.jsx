@@ -1,5 +1,5 @@
 export default {
-  BLACK: "#4f75fe",
+  PRIMARY: "#4f75fe",
   EYES: "#4f75fe",
   BLACK1: "#22ce99",
   DARK: "#43597d",

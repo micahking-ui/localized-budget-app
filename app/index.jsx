@@ -1,3 +1,4 @@
+//importation
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { supabase } from "./lib/supabase-client";
@@ -7,13 +8,13 @@ import { TranslationContext } from "../contexts/translationContext";
 
 export default function HomePage() {
   const { translations, handleLanguageChange } = useContext(TranslationContext);
-
   const router = useRouter();
 
   useEffect(() => {
     handleGetStarted();
   }, []);
 
+  // handling redirecting
   const handleGetStarted = async () => {
     supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
@@ -32,44 +33,18 @@ export default function HomePage() {
         backgroundColor: "#f2f2f2",
       }}
     >
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignSelf: "stretch",
-          marginTop: 30,
-          paddingHorizontal: 10,
-          paddingTop: 5,
-        }}
-      >
+      <View style={styles.btnAlign}>
         <TouchableOpacity
           onPress={() => handleLanguageChange("hausa")}
           style={styles.selectionButton}
         >
-          <Text
-            style={{
-              color: Colors.BLACK,
-              fontFamily: "poppins-medium",
-              fontSize: 18,
-            }}
-          >
-            Hausa
-          </Text>
+          <Text style={styles.btnText}>Hausa</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handleLanguageChange("english")}
           style={styles.selectionButton}
         >
-          <Text
-            style={{
-              color: Colors.BLACK,
-              fontFamily: "poppins-medium",
-              fontSize: 18,
-            }}
-          >
-            English
-          </Text>
+          <Text style={styles.btnText}>other</Text>
         </TouchableOpacity>
       </View>
 
@@ -81,24 +56,16 @@ export default function HomePage() {
         <Text style={styles.heading2}>Kasafin Kudi </Text>
         <Text style={styles.paragraph}>
           <Text>{translations.intro?.welcome}</Text>
-          <Text style={styles.heading}> NaijaBudget</Text> 
-         <Text>{translations.intro?.welcome1}</Text> 
+          <Text style={styles.heading}> NaijaBudget</Text>
+          <Text>{translations.intro?.welcome1}</Text>
         </Text>
+
         <View style={styles.buttonCon}>
           <TouchableOpacity
             onPress={() => router.replace("/(auth)/login")}
             style={styles.button}
           >
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 15,
-                fontFamily: "poppins-bold",
-                color: Colors.BLACK,
-              }}
-            >
-              {translations.intro?.getstarted}
-            </Text>
+            <Text style={styles.textGet}>{translations.intro?.getstarted}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -118,7 +85,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: Colors.WHITE,
     borderRadius: 99,
-    elevation:10
+    elevation: 10,
   },
 
   heading: {
@@ -136,9 +103,9 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
   },
   paragraph: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: "poppins",
-    marginBottom: 20,
+    marginBottom: 22,
     textAlign: "center",
     color: Colors.WHITE,
   },
@@ -148,7 +115,6 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     fontSize: 18,
-   
   },
   welcomeImg: {
     marginTop: 4,
@@ -158,14 +124,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bgBottom: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.PRIMARY,
     height: 300,
     marginTop: 20,
-    padding: 20,borderRadius:20,
-    marginHorizontal:6
+    padding: 20,
+    borderRadius: 20,
+    marginHorizontal: 6,
   },
   buttonCon: {
     padding: 1,
-    
+  },
+  btnText: {
+    color: Colors.PRIMARY,
+    fontFamily: "poppins-medium",
+    fontSize: 18,
+  },
+  textGet: {
+    textAlign: "center",
+    fontSize: 15,
+    fontFamily: "poppins-bold",
+    color: Colors.PRIMARY,
+  },
+  btnAlign: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignSelf: "stretch",
+    marginTop: 30,
+    paddingHorizontal: 10,
+    paddingTop: 5,
   },
 });

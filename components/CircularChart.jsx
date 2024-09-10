@@ -1,3 +1,4 @@
+//importation of dependdencies and component
 import { View, Text, StyleSheet, Image } from "react-native";
 import React, { useContext, useState } from "react";
 import Colors from "../utils/Colors";
@@ -11,13 +12,15 @@ export default function CircularChart({ categoryList }) {
   const [values, setValues] = useState([1]);
   const [sliceColor, setSliceColor] = useState([Colors.GRAY]);
   const [totalEstimate, setTotalEstimate] = useState();
-  const {translations}=useContext(TranslationContext)
-
+  const { translations } = useContext(TranslationContext);
+  //mounted when the application load
   useEffect(() => {
     if (categoryList && categoryList.length > 0) {
       updateCircularChart();
     }
   }, [categoryList]);
+
+  // function that update the circular chart
   const updateCircularChart = () => {
     if (!categoryList) return;
     let totalEstimate = 0;
@@ -25,6 +28,7 @@ export default function CircularChart({ categoryList }) {
     setValues([]);
     let otherCost = 0;
 
+//mapping category data
     categoryList?.forEach((item, index) => {
       let itemTotalCost = 0;
       item.CategoryItems?.forEach((item_) => {
@@ -47,13 +51,17 @@ export default function CircularChart({ categoryList }) {
     }
     setTotalEstimate(totalEstimate);
   };
+
+  //user interface design
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 20, fontFamily: "poppins" }}>
-       {translations.terms?.estimate}:
+        {translations.terms?.estimate}:
         <Text style={{ fontFamily: "poppins-bold" }}> ₦ {totalEstimate}</Text>
       </Text>
       <View style={styles.subContainer}>
+        
+        {/** pie chart */}
         <PieChart
           widthAndHeight={widthAndHeight}
           series={values}
@@ -103,6 +111,7 @@ export default function CircularChart({ categoryList }) {
     </View>
   );
 }
+// styling components
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,

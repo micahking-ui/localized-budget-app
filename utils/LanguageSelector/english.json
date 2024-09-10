@@ -8,7 +8,8 @@
     "cost1": "Total Budget",
     "create": "Create",
     "heading": "Add New Category",
-    "added": "New Category Added"
+    "added": "New Category Added",
+    "update": "Category Updated"
   },
   "item": {
     "name1": "Item name",
@@ -16,7 +17,8 @@
     "add": "Add",
     "note": "Note",
     "heading": "Add New Items",
-    "added":"New item added"
+    "added":"New item added",
+    "upload":"Upload Image"
   },
   "details": {
     "welcome": "Welcome!",
@@ -92,11 +94,16 @@
     "signupError": "Sign Up Error",
     "register": "User already registered",
     "success": "Sign Up Successful!",
+    "successlogin": "Login Successful!",
     "user":"Error accessing user",
     "deleted":"Deleted",
     "details":"Supply your details",
     "error":"Error",
-    "failed":"Failed to load categories. Please try again later."
+    "requestfail":"Network request Failled.",
+    "networkerror":"Network Error.",
+    "signout":"Sign out user error",
+    "length":"Password must be at least 6 characters"
+   
   },
   "common":{
     "ok":"OK"
